@@ -1,0 +1,33 @@
+#switch-container {
+    position: absolute;
+    left: 50vw;
+    top: 70vh;
+}
+
+.MuiSwitch-root-1 {
+    left: -50%;
+}
+
+#container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.lightOnBg {
+    background: -webkit-radial-gradient(circle, yellow, white 20%);
+    background: -o-radial-gradient(circle, yellow, white 20%);
+    background: -moz-radial-gradient(circle, yellow, white 20%);
+    background: radial-gradient(circle at 50% 45%, yellow, yellow 3%, white 10%);
+}
+
+#img-container {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+}
+
+#img {
+    position: relative;
+    left: -50%;
+    width: 10vw;
+}
