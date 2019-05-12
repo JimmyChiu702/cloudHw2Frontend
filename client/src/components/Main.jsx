@@ -43,9 +43,9 @@ export default class Main extends React.Component {
     }
 
     getLightState() {
-        getLightState().then(lightState => {
-            console.log(`light state: ${lightState}`);
-            this.setState({isLightOn: lightState, isSwitchOn: lightState});
+        getLightState().then(data => {
+            console.log(`light state: ${data.lightState}`);
+            this.setState({isLightOn: data.lightState, isSwitchOn: data.lightState});
         }).catch(err => {
             console.error('Error getting light state', err);
         });
@@ -55,9 +55,9 @@ export default class Main extends React.Component {
         this.setState(prevState => ({
             isSwitchOn: !prevState.isSwitchOn
         }), () => {
-            switchLight(!this.state.isLightOn).then(lightState => {
-                console.log(`light state: ${lightState}`);
-                this.setState({isLightOn: lightState});
+            switchLight(!this.state.isLightOn).then(data => {
+                console.log(`light state: ${data.lightState}`);
+                this.setState({isLightOn: data.lightState});
             }).catch(err => {
                 console.error('Error getting light state', err);
             });

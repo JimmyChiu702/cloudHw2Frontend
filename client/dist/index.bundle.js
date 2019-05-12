@@ -4351,9 +4351,9 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     }
 
     getLightState() {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_api_light_js__["a" /* getLightState */])().then(lightState => {
-            console.log(`light state: ${lightState}`);
-            this.setState({ isLightOn: lightState, isSwitchOn: lightState });
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_api_light_js__["a" /* getLightState */])().then(data => {
+            console.log(`light state: ${data.lightState}`);
+            this.setState({ isLightOn: data.lightState, isSwitchOn: data.lightState });
         }).catch(err => {
             console.error('Error getting light state', err);
         });
@@ -4363,9 +4363,9 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         this.setState(prevState => ({
             isSwitchOn: !prevState.isSwitchOn
         }), () => {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_api_light_js__["b" /* switchLight */])(!this.state.isLightOn).then(lightState => {
-                console.log(`light state: ${lightState}`);
-                this.setState({ isLightOn: lightState });
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_api_light_js__["b" /* switchLight */])(!this.state.isLightOn).then(data => {
+                console.log(`light state: ${data.lightState}`);
+                this.setState({ isLightOn: data.lightState });
             }).catch(err => {
                 console.error('Error getting light state', err);
             });
@@ -9337,14 +9337,20 @@ module.exports = function spread(callback) {
 
 
 function getLightState() {
-    return new Promise((resolve, reject) => {
-        resolve(true);
+    let url = 'getLightState';
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(url).then(res => {
+        if (res.status !== 200) throw new Error(`Unexpected response code: ${res.status}`);
+        return res.data;
     });
 }
 
 function switchLight(newLightState) {
-    return new Promise((resolve, reject) => {
-        resolve(newLightState);
+    let url = 'switchLight';
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(url, {
+        newLightState: newLightState
+    }).then(res => {
+        if (res.status !== 200) throw new Error(`Unexpected response code: ${res.status}`);
+        return res.data;
     });
 }
 
