@@ -11437,7 +11437,7 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
                 console.log(`light state: ${data.lightState}`);
                 this.setState({ isLightOn: data.lightState });
             }).catch(err => {
-                console.error('Error getting light state', err);
+                console.error('Error switching light state', err);
             });
         });
     }
@@ -30568,19 +30568,21 @@ function getLightState() {
         MessageBody: JSON.stringify(context),
         QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook"
     };
-    sqs.sendMessage(sendParams, (err, data) => {
-        if (err) throw new Error(err.message);
-        let receiveParams = {
-            AttributeNames: ["SentTimestamp"],
-            MaxNumberOfMessages: 10,
-            MessageAttributeNames: ["All"],
-            QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook",
-            VisibilityTimeout: 20,
-            WaitTimeSeconds: 10
-        };
-        sqs.receiveMessage(receiveParams, (err, data) => {
-            if (err) throw new Error(err.message);
-            return data.Message[0]['Body'];
+    return new Promise((resolve, reject) => {
+        sqs.sendMessage(sendParams, (err, data) => {
+            if (err) reject(err);
+            let receiveParams = {
+                AttributeNames: ["SentTimestamp"],
+                MaxNumberOfMessages: 10,
+                MessageAttributeNames: ["All"],
+                QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook2",
+                VisibilityTimeout: 20,
+                WaitTimeSeconds: 10
+            };
+            sqs.receiveMessage(receiveParams, (err, data) => {
+                if (err) reject(err);
+                resolve(data.Message[0]['Body']);
+            });
         });
     });
 }
@@ -30596,19 +30598,19 @@ function switchLight(newLightState) {
         MessageBody: JSON.stringify(context),
         QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook"
     };
-    sqs.sendMessage(sendParams, (err, data) => {
-        if (err) throw new Error(err.message);
+    return new Promise((resolve, reject) => {
+        if (err) reject(err);
         let receiveParams = {
             AttributeNames: ["SentTimestamp"],
             MaxNumberOfMessages: 10,
             MessageAttributeNames: ["All"],
-            QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook",
+            QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook2",
             VisibilityTimeout: 20,
             WaitTimeSeconds: 10
         };
         sqs.receiveMessage(receiveParams, (err, data) => {
-            if (err) throw new Error(err.message);
-            return data.Message[0]['Body'];
+            if (err) reject(err);
+            resolve(data.Message[0]['Body']);
         });
     });
 }

@@ -59,7 +59,7 @@ export default class Main extends React.Component {
                 console.log(`light state: ${data.lightState}`);
                 this.setState({isLightOn: data.lightState});
             }).catch(err => {
-                console.error('Error getting light state', err);
+                console.error('Error switching light state', err);
             });
         })
     }

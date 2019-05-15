@@ -14,25 +14,27 @@ export function getLightState() {
         MessageBody: JSON.stringify(context),
         QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook"
     };
-    sqs.sendMessage(sendParams, (err, data) => {
-        if (err)
-            throw new Error(err.message);
-        let receiveParams = {
-            AttributeNames: [
-                "SentTimestamp"
-            ],
-            MaxNumberOfMessages: 10,
-            MessageAttributeNames: [
-                "All"
-            ],
-            QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook",
-            VisibilityTimeout: 20,
-            WaitTimeSeconds: 10
-        };
-        sqs.receiveMessage(receiveParams, (err, data) => {
+    return new Promise((resolve, reject) => {
+        sqs.sendMessage(sendParams, (err, data) => {
             if (err)
-                throw new Error(err.message);
-            return data.Message[0]['Body'];
+                reject(err);
+            let receiveParams = {
+                AttributeNames: [
+                    "SentTimestamp"
+                ],
+                MaxNumberOfMessages: 10,
+                MessageAttributeNames: [
+                    "All"
+                ],
+                QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook2",
+                VisibilityTimeout: 20,
+                WaitTimeSeconds: 10
+            };
+            sqs.receiveMessage(receiveParams, (err, data) => {
+                if (err)
+                    reject(err);
+                resolve(data.Message[0]['Body']);
+            });
         });
     });
 }
@@ -48,9 +50,9 @@ export function switchLight(newLightState) {
         MessageBody: JSON.stringify(context),
         QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook"
     };
-    sqs.sendMessage(sendParams, (err, data) => {
+    return new Promise((resolve, reject) => {
         if (err)
-            throw new Error(err.message);
+            reject(err);
         let receiveParams = {
             AttributeNames: [
                 "SentTimestamp"
@@ -59,14 +61,14 @@ export function switchLight(newLightState) {
             MessageAttributeNames: [
                 "All"
             ],
-            QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook",
+            QueueUrl: "https://sqs.us-east-1.amazonaws.com/915824420250/trytrylook2",
             VisibilityTimeout: 20,
             WaitTimeSeconds: 10
         };
         sqs.receiveMessage(receiveParams, (err, data) => {
             if (err)
-                throw new Error(err.message);
-            return data.Message[0]['Body'];
+                reject(err);
+            resolve(data.Message[0]['Body']);
         });
     });
 }
