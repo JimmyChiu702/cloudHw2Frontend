@@ -11405,7 +11405,7 @@ class Main extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { id: 'img-container' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { id: 'img', src: './images/bulb.png', alt: 'bulb' })
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { id: 'img', src: 'https://s3.amazonaws.com/s104062143-try/bulb.png', alt: 'bulb' })
             ),
             this.state.isSwitchOn != null && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
