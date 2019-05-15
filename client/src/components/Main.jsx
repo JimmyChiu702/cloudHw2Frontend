@@ -26,7 +26,7 @@ export default class Main extends React.Component {
         return (
             <div id='container' className={!!this.state.isLightOn ? 'lightOnBg' : ''}>
                 <div id='img-container'>
-                    <img id='img' src='https://s3.amazonaws.com/s104062143-try/bulb.png' alt='bulb' />            
+                    <img id='img' src='https://s3.amazonaws.com/my-album-104062143/bulb.png' alt='bulb' />            
                 </div>
                 {this.state.isSwitchOn!=null &&
                     <div id='switch-container'>
